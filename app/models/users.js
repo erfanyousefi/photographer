@@ -1,13 +1,5 @@
 const {Types, Schema, model} = require("mongoose");
-const AddressSchema = new Schema({
-    province : {type : String, default : undefined},
-    city : {type : String, default : undefined},
-    street : {type : String, default : undefined},
-    alley : {type : String, default : undefined},
-    zipCode : {type : String, default : undefined},
-}, {
-    versionKey : false
-})
+
 const EventSchema = new Schema({
     title : {type : String, default : undefined},
     description : {type : String, default : undefined},
@@ -40,7 +32,7 @@ const userSchema = new Schema({
     phone : {type : String, default : undefined},
     registrantCode : {type : String, default : undefined},
     nationalCode : {type : String, default : undefined},
-    address : {type : [AddressSchema], default : []},
+    address : {type : String, default : ""},
     rating  : {type : Number, default : 0},
     profileImage  : {type : String, default : "default.png"},
     bio  : {type : String, default : undefined},
@@ -49,7 +41,8 @@ const userSchema = new Schema({
     active : {type : Boolean, default : false},
     myCalender : {type : [CalenderSchema] , default : []},
     conditions : {type : String, default : ""},
-    events : {type : [EventSchema], default : []}
+    events : {type : [EventSchema], default : []},
+    gender : {type : String},
 }, {versionKey : false, timestamps : true});
 const UserModel = model("user", userSchema);
 module.exports = UserModel;

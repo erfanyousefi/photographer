@@ -27,13 +27,6 @@ module.exports = new class AuthService extends Controller{
         }
     }
     async register(payload){
-        const {address} = payload
-        payload.address = [{
-            province : "",
-            city : "",
-            address,
-            zipCode : ""
-        }];
         const result = await UserModel.create(payload).then(doc => doc).catch(error => {
             throw {status : 500, message : "ثبت نام انجام نشد ", error}
         })
