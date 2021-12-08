@@ -19,4 +19,7 @@ module.exports = class Controller{
     async passwordVerify(password, hashedPassword){
         return await bcrypt.compareSync(password, hashedPassword)
     }
+    async createForgoPasswordToken(){
+        return await this.hashPassword("yourForget Password?!!! why?!") + "_@_" + (new Date().getTime() + (1000 * 60 * 5));
+    }
 }

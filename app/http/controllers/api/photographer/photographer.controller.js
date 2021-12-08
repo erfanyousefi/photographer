@@ -45,4 +45,11 @@ module.exports = new class PhotographerController extends Controller{
             next(error)
         }
     }
+    async saveRating(req, res, next){
+        try{
+            
+        }catch(error){
+            next(error)
+        }
+    }
 }

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const http = require("http")
 const mongoose = require('mongoose');
+const cros = require("cors")
 module.exports = class Application{
     constructor(PORT, DB_URL){
         let port = (isNaN(Number(PORT)))? PORT : 8000;
@@ -14,7 +15,8 @@ module.exports = class Application{
     configApplication(){
         app.use(express.static("public"));
         app.use(express.json());
-        app.use(express.urlencoded({extended : false}))
+        app.use(express.urlencoded({extended : false}));
+        app.use(cros())
     }
     createServer(port){
         let cert;

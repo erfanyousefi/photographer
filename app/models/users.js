@@ -27,6 +27,7 @@ const userSchema = new Schema({
     username : {type : String, default : undefined},
     password : {type : String, default : undefined},
     token : {type : String, default : undefined},
+    forgotPasswordToken : {type : String, default : undefined},
     auth_key : {type : String, default : undefined},
     email : {type : String, default : undefined},
     phone : {type : String, default : undefined},

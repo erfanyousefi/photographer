@@ -1,4 +1,4 @@
-const {body} = require("express-validator")
+const {body, query} = require("express-validator")
 const UserModel = require("./../../models/users")
 const nationalCodeValidator = require("./../../modules/national_code_vlidatior")
 module.exports = new class authValidator{
@@ -35,6 +35,44 @@ module.exports = new class authValidator{
                     return true;
                 }else{
                     throw "نقش انتخابی شما صحیح نمیباشد"
+                }
+            })
+        ]
+    }
+    forgetPassword(){
+        return [
+            body("phone").notEmpty().isMobilePhone("fa-IR").withMessage("شماره ارسال شده صحیح نمیباشد")
+        ]
+    }
+    verifyPasswordToken(){
+        return [
+            body("password").custom(password => {
+                if(password){
+                    if (password.length < 8 || password.length > 16){
+                        throw "رمز عبور باید حداقل 8 و حداکثر 16 کاراکتر باشد"
+                    }else{
+                        return true;
+                    }
+                }else{
+                    throw "رمز عبور نمیتواند خالی باشد"
+                }
+            }),
+            body("confirmPassword").custom((confirmPassword , {req}) => {
+                if(confirmPassword && confirmPassword == req.body?.password){
+                    return true;
+                }else{
+                    throw "رمز عبور و تکرار آن برابر نمیباشند"
+                }
+            }),
+            query("token").custom((token, req) => {
+                if(token){
+                    const timestamp = token.split("_@_")[1];
+                    const now = new Date().getTime();
+                    console.log(+timestamp, +now);
+                    if(+timestamp < +now) throw "توکن فراموشی رمز عبور منقضی شده";
+                    return true;
+                }else{
+                    throw "توکن اعتبار سنجی نمیتواند خالی باشد"
                 }
             })
         ]
