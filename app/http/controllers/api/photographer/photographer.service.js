@@ -23,4 +23,20 @@ module.exports = new class AuthService extends Controller{
         if(result.modifiedCount && result.acknowledged) return true
         return false
     }
+    async addSkills(_id, skill){
+        const skills = await UserModel.findOne({_id, skills : skill});
+        if(skills){
+            throw {status : 400, message : "شما این مهارت را قبلا به لیست مهارت های خود افزوده اید"}
+        }
+    }
+    async getAllRequests(employee, status){
+        if(!status)return await RequestModel.find({employee})
+        return await RequestModel.find({employee, status})
+    }
+    async saveRating(score, phone){
+        const result = await UserModel.updateOne({phone}, {$inc : {rating : +score}}).catch(err => {
+            throw {status : 500, message : "ثبت امتیاز انجام نشد مجددا سعی کنید", err}
+        })
+        return result.modifiedCount > 0
+    }
 }

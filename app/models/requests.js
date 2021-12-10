@@ -4,7 +4,9 @@ const RequestSchema = new Schema({
     employee : {type : String},
     atelier : {type : String},
     requester : {type : String},
+    rating : {type : String, default : 0},
     price : {type : String},
+    status : {type : String, default : "pending"}
 }, {
     timestamps : true,
     versionKey : false

@@ -1,6 +1,5 @@
 const Controller = require("../../Controller")
 const photographerService = require("./photographer.service")
-const bcrypt = require("bcrypt")
 module.exports = new class PhotographerController extends Controller{
     async getAllPhotographers (req, res, next) {
         try{
@@ -45,9 +44,58 @@ module.exports = new class PhotographerController extends Controller{
             next(error)
         }
     }
-    async saveRating(req, res, next){
+    async addSkills(req, res,next){
         try{
-            
+            const {_id} = req.user;
+            const {skill} = req.body;
+            const result = await photographerService.addSkills(_id, skill);
+        }catch(error){
+            next(error)
+        }
+    }
+    async getAllRequests(req, res,next){
+        try{
+            const {phone} = req.user;
+            const requests = await photographerService.getAllRequests(phone);
+            return res.status(200).json({
+                requests
+            })
+        }catch(error){
+            next(error)
+        }
+    }
+    async getConfirmedRequests(req, res,next){
+        try{
+            const {phone} = req.user;
+            let status = "confirmed";
+            const requests = await photographerService.getAllRequests(phone, status);
+            return res.status(200).json({
+                requests
+            })
+        }catch(error){
+            next(error)
+        }
+    }
+    async getCanceledRequests(req, res,next){
+        try{
+            const {phone} = req.user;
+            let status = "canceled";
+            const requests = await photographerService.getAllRequests(phone, status);
+            return res.status(200).json({
+                requests
+            })
+        }catch(error){
+            next(error)
+        }
+    }
+    async getPendingRequests(req, res,next){
+        try{
+            const {phone} = req.user;
+            let status = "pending";
+            const requests = await photographerService.getAllRequests(phone, status);
+            return res.status(200).json({
+                requests
+            })
         }catch(error){
             next(error)
         }

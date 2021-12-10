@@ -1,5 +1,5 @@
 module.exports.isPhotographer = async (req, res, next) => {
-    const {user} = req.user;
+    const {user} = req;
     if(user && user.role == "photographer"){
         next();
     }else{
@@ -12,7 +12,7 @@ module.exports.isPhotographer = async (req, res, next) => {
     }
 }
 module.exports.isAtelier = async (req, res, next) => {
-    const {user} = req.user;
+    const {user} = req;
     if(user && user.role == "atelier"){
         next();
     }else{
@@ -25,7 +25,7 @@ module.exports.isAtelier = async (req, res, next) => {
     }
 }
 module.exports.isAuthenticated = async (req, res, next) => {
-    const {user} = req.user;
+    const {user} = req;
     if(!user){
         next();
     }else{
